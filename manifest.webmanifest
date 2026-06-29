@@ -1,0 +1,20 @@
+{
+  "name": "個人資金規劃與記帳",
+  "short_name": "資金記帳",
+  "description": "用手機持續紀錄收入與支出，追蹤預算、節流雷達與分類狀態。",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f5f7f2",
+  "theme_color": "#23624d",
+  "orientation": "portrait-primary",
+  "lang": "zh-Hant",
+  "icons": [
+    {
+      "src": "./icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
