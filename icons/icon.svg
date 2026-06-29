@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="資金記帳圖示">
+  <rect width="512" height="512" rx="112" fill="#23624d" />
+  <rect x="116" y="104" width="280" height="304" rx="34" fill="#ffffff" />
+  <rect x="150" y="148" width="212" height="34" rx="17" fill="#e7f2ee" />
+  <rect x="150" y="216" width="82" height="70" rx="18" fill="#e7eef8" />
+  <rect x="258" y="216" width="104" height="70" rx="18" fill="#fbf0df" />
+  <rect x="150" y="312" width="212" height="34" rx="17" fill="#e7f2ee" />
+  <circle cx="189" cy="251" r="17" fill="#245c93" />
+  <path
+    d="M288 252c0-16 13-29 29-29h11v21h-11a8 8 0 0 0 0 16h8c18 0 32 14 32 31s-14 31-32 31h-12v-21h12a10 10 0 1 0 0-20h-8c-16 0-29-13-29-29Z"
+    fill="#a35f00"
+  />
+</svg>
