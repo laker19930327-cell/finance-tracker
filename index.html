@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#23624d" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="資金記帳" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta
+      name="description"
+      content="用手機持續紀錄收入與支出，追蹤預算、節流雷達與分類狀態。"
+    />
+    <title>個人資金規劃與記帳</title>
+    <link rel="icon" href="data:," />
+    <link rel="icon" href="./icons/icon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Personal Finance Coach</p>
+          <h1>資金規劃與記帳</h1>
+        </div>
+        <div class="month-control">
+          <label for="monthPicker">月份</label>
+          <input id="monthPicker" type="month" />
+        </div>
+      </header>
+
+      <section class="layout">
+        <aside class="setup-panel" aria-label="基本財務資料">
+          <div class="section-title">
+            <span>01</span>
+            <h2>基本資料</h2>
+          </div>
+
+          <form id="profileForm" class="stacked-form">
+            <label>
+              每月稅後收入
+              <input id="monthlyIncome" type="number" min="0" step="100" inputmode="decimal" />
+            </label>
+            <label>
+              目前緊急預備金
+              <input id="emergencyFund" type="number" min="0" step="100" inputmode="decimal" />
+            </label>
+            <label>
+              每月固定債務最低付款
+              <input id="debtPayment" type="number" min="0" step="100" inputmode="decimal" />
+            </label>
+            <label>
+              預計緊急預備金月數
+              <input id="emergencyMonths" type="number" min="1" max="12" step="1" />
+            </label>
+            <label>
+              幣別
+              <select id="currency">
+                <option value="TWD">TWD</option>
+                <option value="USD">USD</option>
+                <option value="JPY">JPY</option>
+                <option value="HKD">HKD</option>
+                <option value="SGD">SGD</option>
+              </select>
+            </label>
+            <label>
+              風險承受度
+              <select id="riskLevel">
+                <option value="low">保守</option>
+                <option value="medium">穩健</option>
+                <option value="high">積極</option>
+              </select>
+            </label>
+            <button type="submit" class="primary-action">更新規劃</button>
+          </form>
+        </aside>
+
+        <section class="workspace">
+          <section class="summary-grid" aria-label="本月摘要">
+            <article class="metric">
+              <span>本月收入</span>
+              <strong id="incomeTotal">$0</strong>
+            </article>
+            <article class="metric">
+              <span>本月支出</span>
+              <strong id="expenseTotal">$0</strong>
+            </article>
+            <article class="metric">
+              <span>本月結餘</span>
+              <strong id="netTotal">$0</strong>
+            </article>
+            <article class="metric accent">
+              <span>可投入學習與投資</span>
+              <strong id="growthMoney">$0</strong>
+            </article>
+          </section>
+
+          <section class="analysis-grid" aria-label="消費分析">
+            <article class="tool-panel insight-panel">
+              <div class="section-title">
+                <span>02</span>
+                <h2>節流雷達</h2>
+              </div>
+              <div id="analysisSummary" class="analysis-summary"></div>
+              <div class="insight-stats">
+                <div>
+                  <span>每日平均支出</span>
+                  <strong id="dailyAverage">$0</strong>
+                </div>
+                <div>
+                  <span>月底預估支出</span>
+                  <strong id="projectedExpense">$0</strong>
+                </div>
+                <div>
+                  <span>可節流潛力</span>
+                  <strong id="savingPotential">$0</strong>
+                </div>
+              </div>
+            </article>
+
+            <article class="tool-panel">
+              <div class="section-title">
+                <span>03</span>
+                <h2>分類狀態</h2>
+              </div>
+              <div id="categoryBreakdown" class="category-breakdown"></div>
+            </article>
+          </section>
+
+          <section class="planner-grid">
+            <article class="tool-panel">
+              <div class="section-title">
+                <span>04</span>
+                <h2>建議預算</h2>
+              </div>
+              <div id="budgetList" class="budget-list"></div>
+            </article>
+
+            <article class="tool-panel">
+              <div class="section-title">
+                <span>05</span>
+                <h2>資金優先順序</h2>
+              </div>
+              <ol id="priorityList" class="priority-list"></ol>
+            </article>
+          </section>
+
+          <section class="entry-grid">
+            <article class="tool-panel">
+              <div class="section-title">
+                <span>06</span>
+                <h2>新增紀錄</h2>
+              </div>
+              <form id="transactionForm" class="transaction-form">
+                <label>
+                  日期
+                  <input id="txDate" type="date" required />
+                </label>
+                <label>
+                  類型
+                  <select id="txType">
+                    <option value="expense">支出</option>
+                    <option value="income">收入</option>
+                  </select>
+                </label>
+                <label>
+                  分類
+                  <select id="txCategory"></select>
+                </label>
+                <div class="quick-tools wide" aria-label="快速填入">
+                  <div>
+                    <span>常用分類</span>
+                    <div id="quickCategories" class="chip-row"></div>
+                  </div>
+                  <div>
+                    <span>快速金額</span>
+                    <div class="chip-row">
+                      <button type="button" class="quick-chip" data-amount="100">100</button>
+                      <button type="button" class="quick-chip" data-amount="200">200</button>
+                      <button type="button" class="quick-chip" data-amount="500">500</button>
+                      <button type="button" class="quick-chip" data-amount="1000">1000</button>
+                    </div>
+                  </div>
+                  <div>
+                    <span>常用備註</span>
+                    <div class="chip-row">
+                      <button type="button" class="quick-chip" data-note="早餐">早餐</button>
+                      <button type="button" class="quick-chip" data-note="午餐">午餐</button>
+                      <button type="button" class="quick-chip" data-note="交通">交通</button>
+                      <button type="button" class="quick-chip" data-note="課程">課程</button>
+                    </div>
+                  </div>
+                </div>
+                <label>
+                  金額
+                  <input id="txAmount" type="number" min="0" step="1" inputmode="decimal" required />
+                </label>
+                <label class="wide">
+                  備註
+                  <input id="txNote" type="text" maxlength="60" placeholder="例如：午餐、課程、ETF 定期定額" />
+                </label>
+                <button type="submit" class="primary-action">新增</button>
+              </form>
+            </article>
+
+            <article class="tool-panel">
+              <div class="section-title">
+                <span>07</span>
+                <h2>分類表</h2>
+              </div>
+              <div class="category-table-wrap">
+                <table class="category-table">
+                  <thead>
+                    <tr>
+                      <th>分類</th>
+                      <th>用途</th>
+                      <th>預算角色</th>
+                    </tr>
+                  </thead>
+                  <tbody id="categoryTable"></tbody>
+                </table>
+              </div>
+            </article>
+          </section>
+
+          <section class="tool-panel">
+            <div class="records-header">
+              <div class="section-title">
+                <span>08</span>
+                <h2>本月記帳</h2>
+              </div>
+              <div class="record-actions">
+                <button id="backupData" type="button" class="secondary-action">備份資料</button>
+                <button id="restoreData" type="button" class="secondary-action">匯入備份</button>
+                <button id="exportCsv" type="button" class="secondary-action">匯出 CSV</button>
+                <button id="clearMonth" type="button" class="secondary-action danger">清空本月</button>
+                <input id="restoreFile" type="file" accept="application/json" hidden />
+              </div>
+            </div>
+            <div class="records-wrap">
+              <table class="records-table">
+                <thead>
+                  <tr>
+                    <th>日期</th>
+                    <th>類型</th>
+                    <th>分類</th>
+                    <th>備註</th>
+                    <th class="amount-cell">金額</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="recordsBody"></tbody>
+              </table>
+              <p id="emptyState" class="empty-state">尚無本月紀錄</p>
+            </div>
+          </section>
+        </section>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
