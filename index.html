@@ -164,10 +164,20 @@
                   <div>
                     <span>常用備註</span>
                     <div class="chip-row">
-                      <button type="button" class="quick-chip" data-note="早餐">早餐</button>
-                      <button type="button" class="quick-chip" data-note="午餐">午餐</button>
-                      <button type="button" class="quick-chip" data-note="交通">交通</button>
-                      <button type="button" class="quick-chip" data-note="課程">課程</button>
+                      <button type="button" class="quick-chip" data-note="食-早餐">食-早餐</button>
+                      <button type="button" class="quick-chip" data-note="食-午餐">食-午餐</button>
+                      <button type="button" class="quick-chip" data-note="食-晚餐">食-晚餐</button>
+                      <button type="button" class="quick-chip" data-note="食-宵夜">食-宵夜</button>
+                      <button type="button" class="quick-chip" data-note="食-飲料">食-飲料</button>
+                      <button type="button" class="quick-chip" data-note="食-外送">食-外送</button>
+                      <button type="button" class="quick-chip" data-note="食-聚餐">食-聚餐</button>
+                      <button type="button" class="quick-chip" data-note="交通-通勤">交通-通勤</button>
+                      <button type="button" class="quick-chip" data-note="交通-計程車">交通-計程車</button>
+                      <button type="button" class="quick-chip" data-note="購物-日用品">購物-日用品</button>
+                      <button type="button" class="quick-chip" data-note="購物-非必要">購物-非必要</button>
+                      <button type="button" class="quick-chip" data-note="訂閱-固定">訂閱-固定</button>
+                      <button type="button" class="quick-chip" data-note="醫療-看診">醫療-看診</button>
+                      <button type="button" class="quick-chip" data-note="人情-禮金">人情-禮金</button>
                     </div>
                   </div>
                 </div>
@@ -177,7 +187,12 @@
                 </label>
                 <label class="wide">
                   備註
-                  <input id="txNote" type="text" maxlength="60" placeholder="例如：午餐、課程、ETF 定期定額" />
+                  <input
+                    id="txNote"
+                    type="text"
+                    maxlength="60"
+                    placeholder="例如：食-晚餐、食-宵夜、食-飲料、食-外送、交通-通勤、購物-非必要"
+                  />
                 </label>
                 <label id="txIncludeField" class="checkbox-label wide">
                   <input id="txIncludeInBudget" type="checkbox" checked />
