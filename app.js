@@ -126,6 +126,8 @@ const elements = {
   restoreFile: document.querySelector("#restoreFile"),
   exportCsv: document.querySelector("#exportCsv"),
   clearMonth: document.querySelector("#clearMonth"),
+  tabButtons: document.querySelectorAll(".view-tab"),
+  tabPanels: document.querySelectorAll("[data-tab-panel]"),
 };
 
 let state = loadState();
@@ -611,6 +613,20 @@ function renderAll() {
   renderRecords();
 }
 
+function setActiveTab(target) {
+  elements.tabButtons.forEach((button) => {
+    const isActive = button.dataset.tabTarget === target;
+    button.classList.toggle("active", isActive);
+    button.setAttribute("aria-selected", String(isActive));
+  });
+
+  elements.tabPanels.forEach((panel) => {
+    const isActive = panel.dataset.tabPanel === target;
+    panel.classList.toggle("active", isActive);
+    panel.hidden = !isActive;
+  });
+}
+
 function updateProfile(event) {
   event.preventDefault();
   state.profile = {
@@ -781,6 +797,9 @@ function initialize() {
   elements.profileForm.addEventListener("submit", updateProfile);
   elements.transactionForm.addEventListener("submit", addTransaction);
   elements.transactionForm.addEventListener("click", handleQuickInput);
+  elements.tabButtons.forEach((button) => {
+    button.addEventListener("click", () => setActiveTab(button.dataset.tabTarget));
+  });
   elements.txType.addEventListener("change", () => {
     renderCategorySelect();
     renderQuickCategories();
