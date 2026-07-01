@@ -118,7 +118,7 @@ select:focus {
 
 .layout {
   display: grid;
-  grid-template-columns: minmax(260px, 330px) 1fr;
+  grid-template-columns: 1fr;
   gap: 18px;
   align-items: start;
 }
@@ -133,9 +133,21 @@ select:focus {
 }
 
 .setup-panel {
-  position: sticky;
-  top: 18px;
+  position: static;
   padding: 18px;
+}
+
+.tab-panel[hidden] {
+  display: none !important;
+}
+
+.workspace > .tab-panel:not([hidden]) {
+  display: grid;
+  gap: 18px;
+}
+
+.workspace > .tool-panel.tab-panel:not([hidden]) {
+  display: block;
 }
 
 .section-title {
@@ -201,6 +213,42 @@ select:focus {
 .workspace {
   display: grid;
   gap: 18px;
+}
+
+.daily-entry-grid {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.view-tabs {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 8px;
+  background: rgba(245, 247, 242, 0.94);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+}
+
+.view-tab {
+  min-height: 38px;
+  flex: 1 0 auto;
+  padding: 8px 12px;
+  color: var(--primary-dark);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 850;
+}
+
+.view-tab.active {
+  color: #fff;
+  background: var(--primary);
+  border-color: var(--primary);
 }
 
 .summary-grid {
@@ -665,14 +713,6 @@ th {
 }
 
 @media (max-width: 1050px) {
-  .layout {
-    grid-template-columns: 1fr;
-  }
-
-  .setup-panel {
-    position: static;
-  }
-
   .stacked-form {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -712,7 +752,20 @@ th {
   }
 
   h1 {
-    font-size: 2.4rem;
+    font-size: 2rem;
+  }
+
+  .topbar {
+    min-height: auto;
+    padding-bottom: 12px;
+  }
+
+  .metric {
+    min-height: 92px;
+  }
+
+  .view-tabs {
+    margin: -4px 0 0;
   }
 
   .records-header,
