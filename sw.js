@@ -1,9 +1,9 @@
-const CACHE_NAME = "finance-tracker-v2";
+const CACHE_NAME = "finance-tracker-v3";
 const APP_SHELL = [
   "./",
   "./index.html",
-  "./styles.css",
-  "./app.js",
+  "./styles.css?v=3",
+  "./app.js?v=3",
   "./manifest.webmanifest",
   "./icons/icon.svg",
 ];
