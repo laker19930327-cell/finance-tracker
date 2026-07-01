@@ -171,7 +171,8 @@ select:focus {
 }
 
 .stacked-form,
-.transaction-form {
+.transaction-form,
+.account-form {
   display: grid;
   gap: 12px;
 }
@@ -213,6 +214,84 @@ select:focus {
 .workspace {
   display: grid;
   gap: 18px;
+}
+
+.account-settings {
+  display: grid;
+  gap: 14px;
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.compact-title {
+  margin-bottom: 0;
+}
+
+.account-form {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.account-form button {
+  grid-column: 1 / -1;
+}
+
+.account-list,
+.account-summary-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.account-card,
+.credit-card-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.account-card span,
+.credit-card-card span,
+.credit-card-card dt {
+  display: block;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.account-card strong,
+.credit-card-card strong,
+.credit-card-card dd {
+  display: block;
+  margin: 4px 0 0;
+  font-weight: 900;
+  overflow-wrap: anywhere;
+}
+
+.credit-card-card dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+}
+
+.credit-card-card dd {
+  margin-left: 0;
+}
+
+.delete-account {
+  min-height: 34px;
+  padding: 6px 10px;
+  color: var(--red);
+  background: var(--red-soft);
+  border: 1px solid #ecc8c6;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 850;
 }
 
 .daily-entry-grid {
@@ -287,6 +366,7 @@ select:focus {
   color: rgba(255, 255, 255, 0.78);
 }
 
+.report-grid,
 .analysis-grid,
 .planner-grid,
 .entry-grid {
@@ -298,6 +378,16 @@ select:focus {
 .tool-panel {
   min-width: 0;
   padding: 18px;
+}
+
+.report-panel {
+  display: grid;
+  align-content: start;
+  gap: 0;
+}
+
+.compact-summary {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .budget-list {
@@ -550,7 +640,27 @@ select:focus {
   grid-column: 1 / -1;
 }
 
-.transaction-form button {
+.form-actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 42px;
+  color: var(--ink);
+}
+
+.checkbox-label input {
+  width: 18px;
+  min-height: 18px;
+  flex: 0 0 auto;
+}
+
+.transaction-form > .primary-action {
   grid-column: 1 / -1;
 }
 
@@ -667,23 +777,65 @@ th {
   justify-content: flex-end;
 }
 
+.record-filters {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: end;
+  margin: 14px 0;
+  padding: 12px;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
 .records-table {
-  min-width: 720px;
+  min-width: 920px;
 }
 
 .amount-cell {
   text-align: right;
 }
 
+.account-name-cell small,
+td small {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 750;
+}
+
+.row-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.edit-row,
 .delete-row {
   width: 34px;
   height: 34px;
-  color: var(--red);
   background: transparent;
   border: 1px solid transparent;
   border-radius: 8px;
-  font-size: 1.15rem;
   line-height: 1;
+}
+
+.edit-row {
+  width: auto;
+  padding: 0 9px;
+  color: var(--primary-dark);
+  background: var(--teal-soft);
+  border-color: #c7ddd4;
+  font-size: 0.78rem;
+  font-weight: 850;
+}
+
+.delete-row {
+  color: var(--red);
+  font-size: 1.15rem;
 }
 
 .delete-row:hover {
@@ -712,12 +864,19 @@ th {
   font-weight: 850;
 }
 
+.transfer-text {
+  color: var(--blue);
+  font-weight: 850;
+}
+
 @media (max-width: 1050px) {
-  .stacked-form {
+  .stacked-form,
+  .account-form {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .stacked-form button {
+  .stacked-form button,
+  .account-form button {
     grid-column: 1 / -1;
   }
 }
@@ -734,6 +893,7 @@ th {
   }
 
   .summary-grid,
+  .report-grid,
   .analysis-grid,
   .planner-grid,
   .entry-grid {
@@ -741,7 +901,15 @@ th {
   }
 
   .stacked-form,
+  .account-form,
   .transaction-form {
+    grid-template-columns: 1fr;
+  }
+
+  .account-card,
+  .credit-card-card,
+  .record-filters,
+  .form-actions {
     grid-template-columns: 1fr;
   }
 }
