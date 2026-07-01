@@ -15,7 +15,7 @@
     <link rel="icon" href="data:," />
     <link rel="icon" href="./icons/icon.svg" type="image/svg+xml" />
     <link rel="manifest" href="./manifest.webmanifest" />
-    <link rel="stylesheet" href="./styles.css?v=3" />
+    <link rel="stylesheet" href="./styles.css?v=4" />
   </head>
   <body>
     <main class="app-shell">
@@ -74,6 +74,33 @@
             </label>
             <button type="submit" class="primary-action">更新規劃</button>
           </form>
+
+          <section class="account-settings" aria-label="帳戶設定">
+            <div class="section-title compact-title">
+              <span>09</span>
+              <h2>帳戶設定</h2>
+            </div>
+            <form id="accountForm" class="account-form">
+              <label>
+                帳戶名稱
+                <input id="accountName" type="text" maxlength="30" placeholder="例如：薪轉銀行、旅遊信用卡" />
+              </label>
+              <label>
+                帳戶類型
+                <select id="accountType">
+                  <option value="cash">現金</option>
+                  <option value="bank">銀行帳戶</option>
+                  <option value="creditCard">信用卡帳戶</option>
+                </select>
+              </label>
+              <label>
+                初始餘額或未繳金額
+                <input id="accountOpeningBalance" type="number" step="1" inputmode="decimal" />
+              </label>
+              <button type="submit" class="primary-action">新增帳戶</button>
+            </form>
+            <div id="accountsList" class="account-list"></div>
+          </section>
         </aside>
 
         <section class="workspace">
@@ -93,11 +120,32 @@
                   <select id="txType">
                     <option value="expense">支出</option>
                     <option value="income">收入</option>
+                    <option value="transfer">轉帳</option>
+                  </select>
+                </label>
+                <label id="txCategoryField">
+                  分類
+                  <select id="txCategory"></select>
+                </label>
+                <label id="txPaymentMethodField">
+                  付款方式
+                  <select id="txPaymentMethod">
+                    <option value="cash">現金</option>
+                    <option value="bank">銀行帳戶</option>
+                    <option value="creditCard">信用卡</option>
                   </select>
                 </label>
                 <label>
-                  分類
-                  <select id="txCategory"></select>
+                  <span id="txAccountLabel">帳戶</span>
+                  <select id="txAccount"></select>
+                </label>
+                <label id="txTransferField" hidden>
+                  轉入帳戶
+                  <select id="txTransferAccount"></select>
+                </label>
+                <label id="txStatementField" hidden>
+                  帳單月份
+                  <input id="txCreditCardStatementMonth" type="month" />
                 </label>
                 <div class="quick-tools wide" aria-label="快速填入">
                   <div>
@@ -131,7 +179,14 @@
                   備註
                   <input id="txNote" type="text" maxlength="60" placeholder="例如：午餐、課程、ETF 定期定額" />
                 </label>
-                <button type="submit" class="primary-action">新增</button>
+                <label id="txIncludeField" class="checkbox-label wide">
+                  <input id="txIncludeInBudget" type="checkbox" checked />
+                  <span>列入預算與消費統計</span>
+                </label>
+                <div class="form-actions wide">
+                  <button id="txSubmit" type="submit" class="primary-action">新增</button>
+                  <button id="cancelEdit" type="button" class="secondary-action" hidden>取消編輯</button>
+                </div>
               </form>
             </article>
           </section>
@@ -145,29 +200,70 @@
           </nav>
 
           <section class="tab-panel active" data-tab-panel="analysis">
-            <section class="summary-grid" aria-label="本月摘要">
-              <article class="metric">
-                <span>本月收入</span>
-                <strong id="incomeTotal">$0</strong>
+            <section class="report-grid" aria-label="月報">
+              <article class="tool-panel report-panel">
+                <div class="section-title">
+                  <span>02</span>
+                  <h2>消費統計</h2>
+                </div>
+                <div class="summary-grid compact-summary">
+                  <article class="metric">
+                    <span>本月收入</span>
+                    <strong id="incomeTotal">$0</strong>
+                  </article>
+                  <article class="metric">
+                    <span>本月支出</span>
+                    <strong id="expenseTotal">$0</strong>
+                  </article>
+                  <article class="metric">
+                    <span>本月結餘</span>
+                    <strong id="netTotal">$0</strong>
+                  </article>
+                  <article class="metric accent">
+                    <span>可投入學習與投資</span>
+                    <strong id="growthMoney">$0</strong>
+                  </article>
+                </div>
               </article>
-              <article class="metric">
-                <span>本月支出</span>
-                <strong id="expenseTotal">$0</strong>
+
+              <article class="tool-panel report-panel">
+                <div class="section-title">
+                  <span>03</span>
+                  <h2>現金流統計</h2>
+                </div>
+                <div class="summary-grid compact-summary">
+                  <article class="metric">
+                    <span>本月實際流入</span>
+                    <strong id="cashflowInTotal">$0</strong>
+                  </article>
+                  <article class="metric">
+                    <span>本月實際流出</span>
+                    <strong id="cashflowOutTotal">$0</strong>
+                  </article>
+                  <article class="metric">
+                    <span>現金流淨額</span>
+                    <strong id="cashflowNetTotal">$0</strong>
+                  </article>
+                  <article class="metric accent">
+                    <span>信用卡未繳</span>
+                    <strong id="cardUnpaidTotal">$0</strong>
+                  </article>
+                </div>
               </article>
-              <article class="metric">
-                <span>本月結餘</span>
-                <strong id="netTotal">$0</strong>
-              </article>
-              <article class="metric accent">
-                <span>可投入學習與投資</span>
-                <strong id="growthMoney">$0</strong>
-              </article>
+            </section>
+
+            <section class="tool-panel">
+              <div class="section-title">
+                <span>04</span>
+                <h2>信用卡未繳金額</h2>
+              </div>
+              <div id="creditCardSummary" class="account-summary-grid"></div>
             </section>
 
             <section class="analysis-grid" aria-label="消費分析">
               <article class="tool-panel insight-panel">
                 <div class="section-title">
-                  <span>02</span>
+                  <span>05</span>
                   <h2>節流雷達</h2>
                 </div>
                 <div id="analysisSummary" class="analysis-summary"></div>
@@ -189,7 +285,7 @@
 
               <article class="tool-panel">
                 <div class="section-title">
-                  <span>03</span>
+                  <span>06</span>
                   <h2>分類狀態</h2>
                 </div>
                 <div id="categoryBreakdown" class="category-breakdown"></div>
@@ -201,7 +297,7 @@
             <section class="planner-grid">
               <article class="tool-panel">
                 <div class="section-title">
-                  <span>04</span>
+                  <span>07</span>
                   <h2>建議預算</h2>
                 </div>
                 <div id="budgetList" class="budget-list"></div>
@@ -209,7 +305,7 @@
 
               <article class="tool-panel">
                 <div class="section-title">
-                  <span>05</span>
+                  <span>08</span>
                   <h2>資金優先順序</h2>
                 </div>
                 <ol id="priorityList" class="priority-list"></ol>
@@ -220,7 +316,7 @@
           <section class="tab-panel" data-tab-panel="categories" hidden>
             <article class="tool-panel">
               <div class="section-title">
-                <span>06</span>
+                <span>10</span>
                 <h2>分類表</h2>
               </div>
               <div class="category-table-wrap">
@@ -241,7 +337,7 @@
           <section class="tool-panel tab-panel" data-tab-panel="records" hidden>
             <div class="records-header">
               <div class="section-title">
-                <span>07</span>
+                <span>11</span>
                 <h2>本月記帳</h2>
               </div>
               <div class="record-actions">
@@ -252,6 +348,19 @@
                 <input id="restoreFile" type="file" accept="application/json" hidden />
               </div>
             </div>
+            <div class="record-filters" aria-label="記帳篩選">
+              <label>
+                帳戶篩選
+                <select id="accountFilter">
+                  <option value="all">全部帳戶</option>
+                </select>
+              </label>
+              <label>
+                帳單月份
+                <input id="statementMonthFilter" type="month" />
+              </label>
+              <button id="clearFilters" type="button" class="secondary-action">清除篩選</button>
+            </div>
             <div class="records-wrap">
               <table class="records-table">
                 <thead>
@@ -259,9 +368,10 @@
                     <th>日期</th>
                     <th>類型</th>
                     <th>分類</th>
+                    <th>帳戶</th>
                     <th>備註</th>
                     <th class="amount-cell">金額</th>
-                    <th></th>
+                    <th>操作</th>
                   </tr>
                 </thead>
                 <tbody id="recordsBody"></tbody>
@@ -273,6 +383,6 @@
       </section>
     </main>
 
-    <script src="./app.js?v=3"></script>
+    <script src="./app.js?v=4"></script>
   </body>
 </html>
