@@ -31,9 +31,9 @@
       </header>
 
       <section class="layout">
-        <aside class="setup-panel" aria-label="基本財務資料">
+        <aside class="setup-panel tab-panel" data-tab-panel="settings" aria-label="基本財務資料" hidden>
           <div class="section-title">
-            <span>01</span>
+            <span>08</span>
             <h2>基本資料</h2>
           </div>
 
@@ -77,79 +77,10 @@
         </aside>
 
         <section class="workspace">
-          <section class="summary-grid" aria-label="本月摘要">
-            <article class="metric">
-              <span>本月收入</span>
-              <strong id="incomeTotal">$0</strong>
-            </article>
-            <article class="metric">
-              <span>本月支出</span>
-              <strong id="expenseTotal">$0</strong>
-            </article>
-            <article class="metric">
-              <span>本月結餘</span>
-              <strong id="netTotal">$0</strong>
-            </article>
-            <article class="metric accent">
-              <span>可投入學習與投資</span>
-              <strong id="growthMoney">$0</strong>
-            </article>
-          </section>
-
-          <section class="analysis-grid" aria-label="消費分析">
-            <article class="tool-panel insight-panel">
-              <div class="section-title">
-                <span>02</span>
-                <h2>節流雷達</h2>
-              </div>
-              <div id="analysisSummary" class="analysis-summary"></div>
-              <div class="insight-stats">
-                <div>
-                  <span>每日平均支出</span>
-                  <strong id="dailyAverage">$0</strong>
-                </div>
-                <div>
-                  <span>月底預估支出</span>
-                  <strong id="projectedExpense">$0</strong>
-                </div>
-                <div>
-                  <span>可節流潛力</span>
-                  <strong id="savingPotential">$0</strong>
-                </div>
-              </div>
-            </article>
-
+          <section class="entry-grid daily-entry-grid" aria-label="快速記帳">
             <article class="tool-panel">
               <div class="section-title">
-                <span>03</span>
-                <h2>分類狀態</h2>
-              </div>
-              <div id="categoryBreakdown" class="category-breakdown"></div>
-            </article>
-          </section>
-
-          <section class="planner-grid">
-            <article class="tool-panel">
-              <div class="section-title">
-                <span>04</span>
-                <h2>建議預算</h2>
-              </div>
-              <div id="budgetList" class="budget-list"></div>
-            </article>
-
-            <article class="tool-panel">
-              <div class="section-title">
-                <span>05</span>
-                <h2>資金優先順序</h2>
-              </div>
-              <ol id="priorityList" class="priority-list"></ol>
-            </article>
-          </section>
-
-          <section class="entry-grid">
-            <article class="tool-panel">
-              <div class="section-title">
-                <span>06</span>
+                <span>01</span>
                 <h2>新增紀錄</h2>
               </div>
               <form id="transactionForm" class="transaction-form">
@@ -203,10 +134,93 @@
                 <button type="submit" class="primary-action">新增</button>
               </form>
             </article>
+          </section>
 
+          <nav class="view-tabs" aria-label="查看其他內容">
+            <button type="button" class="view-tab active" data-tab-target="analysis" aria-selected="true">分析</button>
+            <button type="button" class="view-tab" data-tab-target="budget" aria-selected="false">預算</button>
+            <button type="button" class="view-tab" data-tab-target="records" aria-selected="false">紀錄</button>
+            <button type="button" class="view-tab" data-tab-target="categories" aria-selected="false">分類</button>
+            <button type="button" class="view-tab" data-tab-target="settings" aria-selected="false">設定</button>
+          </nav>
+
+          <section class="tab-panel active" data-tab-panel="analysis">
+            <section class="summary-grid" aria-label="本月摘要">
+              <article class="metric">
+                <span>本月收入</span>
+                <strong id="incomeTotal">$0</strong>
+              </article>
+              <article class="metric">
+                <span>本月支出</span>
+                <strong id="expenseTotal">$0</strong>
+              </article>
+              <article class="metric">
+                <span>本月結餘</span>
+                <strong id="netTotal">$0</strong>
+              </article>
+              <article class="metric accent">
+                <span>可投入學習與投資</span>
+                <strong id="growthMoney">$0</strong>
+              </article>
+            </section>
+
+            <section class="analysis-grid" aria-label="消費分析">
+              <article class="tool-panel insight-panel">
+                <div class="section-title">
+                  <span>02</span>
+                  <h2>節流雷達</h2>
+                </div>
+                <div id="analysisSummary" class="analysis-summary"></div>
+                <div class="insight-stats">
+                  <div>
+                    <span>每日平均支出</span>
+                    <strong id="dailyAverage">$0</strong>
+                  </div>
+                  <div>
+                    <span>月底預估支出</span>
+                    <strong id="projectedExpense">$0</strong>
+                  </div>
+                  <div>
+                    <span>可節流潛力</span>
+                    <strong id="savingPotential">$0</strong>
+                  </div>
+                </div>
+              </article>
+
+              <article class="tool-panel">
+                <div class="section-title">
+                  <span>03</span>
+                  <h2>分類狀態</h2>
+                </div>
+                <div id="categoryBreakdown" class="category-breakdown"></div>
+              </article>
+            </section>
+          </section>
+
+          <section class="tab-panel" data-tab-panel="budget" hidden>
+            <section class="planner-grid">
+              <article class="tool-panel">
+                <div class="section-title">
+                  <span>04</span>
+                  <h2>建議預算</h2>
+                </div>
+                <div id="budgetList" class="budget-list"></div>
+              </article>
+
+              <article class="tool-panel">
+                <div class="section-title">
+                  <span>05</span>
+                  <h2>資金優先順序</h2>
+                </div>
+                <ol id="priorityList" class="priority-list"></ol>
+              </article>
+            </section>
+          </section>
+
+          <section class="tab-panel" data-tab-panel="categories" hidden>
             <article class="tool-panel">
               <div class="section-title">
-                <span>07</span>
+                <span>06</span>
                 <h2>分類表</h2>
               </div>
               <div class="category-table-wrap">
@@ -224,10 +238,10 @@
             </article>
           </section>
 
-          <section class="tool-panel">
+          <section class="tool-panel tab-panel" data-tab-panel="records" hidden>
             <div class="records-header">
               <div class="section-title">
-                <span>08</span>
+                <span>07</span>
                 <h2>本月記帳</h2>
               </div>
               <div class="record-actions">
